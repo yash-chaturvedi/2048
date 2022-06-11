@@ -75,34 +75,14 @@ public class Board {
     }
 
     private void slideRight() {
-        for(int i=0; i<size; i++) {
-            List<Tile> row = this.tiles.get(i);
-            List<Tile> newRow = new ArrayList<>();
-            int prev=0;
-            for(int j=size-1; j>=0; j--) {
-                int cur = row.get(j).getValue();
-                if(cur == 0) {
-                    continue;
-                }
-                if(prev == 0) {
-                    prev = cur;
-                    continue;
-                }
-                if(prev == cur) {
-                    newRow.add(new Tile(prev + cur));
-                    prev = 0;
-                }
-                else {
-                    newRow.add(new Tile(prev));
-                    prev = cur;
-                }
-            }
-            newRow.add(new Tile(prev));
-            while(newRow.size() != row.size()) {
-                newRow.add(new Tile(0));
-            }
-            Collections.reverse(newRow);
-            this.tiles.set(i, newRow);
+        reverse();
+        slideLeft();
+        reverse();
+    }
+
+    private void reverse() {
+        for(List<Tile> row : tiles) {
+            Collections.reverse(row);
         }
     }
 
